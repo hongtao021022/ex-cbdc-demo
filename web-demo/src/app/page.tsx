@@ -1,3 +1,5 @@
+import CrossBorderSimulator from "@/components/CrossBorderSimulator";
+
 const scenarios = [
   {
     title: "Cross-border PvP",
@@ -116,7 +118,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-
+        <CrossBorderSimulator />
         <footer className="border-t border-white/10 py-6 text-sm text-slate-500">
           Independent research demo inspired by public digital-money
           infrastructure projects.
