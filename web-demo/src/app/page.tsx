@@ -1,6 +1,7 @@
 import CrossBorderSimulator from "@/components/CrossBorderSimulator";
 import ProgrammablePaymentSimulator from "@/components/ProgrammablePaymentSimulator";
 import RegulatoryVisibilitySimulator from "@/components/RegulatoryVisibilitySimulator";
+import FinancialStabilitySimulator from "@/components/FinancialStabilitySimulator";
 
 const scenarios = [
   {
@@ -23,6 +24,13 @@ const scenarios = [
       "Compare what users, commercial banks, central banks, and regulators can observe.",
     status: "Ready",
     href: "#regulatory-visibility",
+  },
+  {
+    title: "Financial Stability",
+    description:
+      "Test bank liquidity, concentrated withdrawals, market funding, and central bank support.",
+    status: "Ready",
+    href: "#financial-stability",
   },
 ];
 
@@ -104,7 +112,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {scenarios.map((scenario) => (
               <a
                 key={scenario.title}
@@ -134,6 +142,8 @@ export default function Home() {
         <ProgrammablePaymentSimulator />
 
         <RegulatoryVisibilitySimulator />
+
+        <FinancialStabilitySimulator />
 
         <footer className="border-t border-white/10 py-6 text-sm text-slate-500">
           Independent research demo inspired by public digital-money
