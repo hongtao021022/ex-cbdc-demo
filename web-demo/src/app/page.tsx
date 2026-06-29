@@ -1,25 +1,30 @@
 import CrossBorderSimulator from "@/components/CrossBorderSimulator";
+import ProgrammablePaymentSimulator from "@/components/ProgrammablePaymentSimulator";
 
 const scenarios = [
   {
     title: "Cross-border PvP",
     description:
       "Simulate atomic settlement between two currencies and prevent broken trades.",
-    status: "Next",
+    status: "Ready",
+    href: "#cross-border-pvp",
   },
   {
     title: "Programmable Payments",
     description:
       "Explore restricted public payments, eligible merchants, and policy compliance.",
-    status: "Planned",
+    status: "Ready",
+    href: "#programmable-payments",
   },
   {
     title: "Regulatory Visibility",
     description:
       "Compare what users, commercial banks, central banks, and regulators can observe.",
     status: "Planned",
+    href: "#scenarios",
   },
 ];
+
 
 const researchDimensions = [
   "Settlement efficiency",
@@ -99,10 +104,12 @@ export default function Home() {
 
           <div className="grid gap-5 md:grid-cols-3">
             {scenarios.map((scenario) => (
-              <article
-                key={scenario.title}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] p-6"
-              >
+  <a
+    key={scenario.title}
+    href={scenario.href}
+    className="block rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/[0.07]"
+  >
+
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="text-xl font-semibold">{scenario.title}</h3>
 
@@ -114,11 +121,12 @@ export default function Home() {
                 <p className="mt-4 leading-7 text-slate-400">
                   {scenario.description}
                 </p>
-              </article>
+              </a>
             ))}
           </div>
         </section>
         <CrossBorderSimulator />
+        <ProgrammablePaymentSimulator />
         <footer className="border-t border-white/10 py-6 text-sm text-slate-500">
           Independent research demo inspired by public digital-money
           infrastructure projects.

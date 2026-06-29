@@ -143,7 +143,11 @@ export default function CrossBorderSimulator() {
   }
 
   return (
-    <section className="border-t border-white/10 py-14">
+    <section
+  id="cross-border-pvp"
+  className="scroll-mt-8 border-t border-white/10 py-14"
+>
+
       <div className="mb-8">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
           Interactive prototype
