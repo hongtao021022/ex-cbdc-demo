@@ -1,5 +1,6 @@
 import CrossBorderSimulator from "@/components/CrossBorderSimulator";
 import ProgrammablePaymentSimulator from "@/components/ProgrammablePaymentSimulator";
+import RegulatoryVisibilitySimulator from "@/components/RegulatoryVisibilitySimulator";
 
 const scenarios = [
   {
@@ -20,11 +21,10 @@ const scenarios = [
     title: "Regulatory Visibility",
     description:
       "Compare what users, commercial banks, central banks, and regulators can observe.",
-    status: "Planned",
-    href: "#scenarios",
+    status: "Ready",
+    href: "#regulatory-visibility",
   },
 ];
-
 
 const researchDimensions = [
   "Settlement efficiency",
@@ -42,6 +42,7 @@ export default function Home() {
             <p className="text-sm font-semibold tracking-[0.2em] text-cyan-400">
               DIGITAL MONEY LAB
             </p>
+
             <p className="mt-1 text-sm text-slate-400">
               Interactive financial infrastructure research
             </p>
@@ -91,12 +92,13 @@ export default function Home() {
 
         <section
           id="scenarios"
-          className="border-t border-white/10 py-12"
+          className="scroll-mt-8 border-t border-white/10 py-12"
         >
           <div className="mb-8">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
               Simulation modules
             </p>
+
             <h2 className="mt-3 text-3xl font-semibold">
               Start with a policy scenario
             </h2>
@@ -104,14 +106,15 @@ export default function Home() {
 
           <div className="grid gap-5 md:grid-cols-3">
             {scenarios.map((scenario) => (
-  <a
-    key={scenario.title}
-    href={scenario.href}
-    className="block rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/[0.07]"
-  >
-
+              <a
+                key={scenario.title}
+                href={scenario.href}
+                className="block rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/[0.07]"
+              >
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-xl font-semibold">{scenario.title}</h3>
+                  <h3 className="text-xl font-semibold">
+                    {scenario.title}
+                  </h3>
 
                   <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">
                     {scenario.status}
@@ -125,8 +128,13 @@ export default function Home() {
             ))}
           </div>
         </section>
+
         <CrossBorderSimulator />
+
         <ProgrammablePaymentSimulator />
+
+        <RegulatoryVisibilitySimulator />
+
         <footer className="border-t border-white/10 py-6 text-sm text-slate-500">
           Independent research demo inspired by public digital-money
           infrastructure projects.
