@@ -3,6 +3,14 @@
 import { useState } from "react";
 
 type SettlementStatus = "idle" | "success" | "failed";
+type LogType = "info" | "success" | "error";
+
+type LogEntry = {
+  id: string;
+  time: string;
+  type: LogType;
+  message: string;
+};
 
 const initialBalances = {
   bankAUsd: 100,
@@ -10,6 +18,19 @@ const initialBalances = {
   bankBUsd: 0,
   bankBEur: 100,
 };
+
+function createLogEntry(type: LogType, message: string): LogEntry {
+  return {
+    id: `${Date.now()}-${Math.random()}`,
+    time: new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }),
+    type,
+    message,
+  };
+}
 
 export default function CrossBorderSimulator() {
   const [bankAUsd, setBankAUsd] = useState(initialBalances.bankAUsd);
@@ -25,10 +46,29 @@ export default function CrossBorderSimulator() {
     "Configure the transaction and run the settlement."
   );
 
+  const [logs, setLogs] = useState<LogEntry[]>([]);
+
+  function addLog(type: LogType, logMessage: string) {
+    const entry = createLogEntry(type, logMessage);
+
+    setLogs((currentLogs) => [entry, ...currentLogs].slice(0, 10));
+  }
+
   function runSettlement() {
+    addLog(
+      "info",
+      `Validating PvP proposal: ${usdAmount} USD against ${eurAmount} EUR.`
+    );
+
     if (usdAmount <= 0 || eurAmount <= 0) {
       setStatus("failed");
       setMessage("Transaction amounts must be greater than zero.");
+
+      addLog(
+        "error",
+        "Settlement rejected because transaction amounts must be greater than zero."
+      );
+
       return;
     }
 
@@ -50,11 +90,16 @@ export default function CrossBorderSimulator() {
         );
       }
 
+      const failureMessage = `Atomic settlement failed. ${reasons.join(
+        ". "
+      )}. No balances were changed.`;
+
       setStatus("failed");
-      setMessage(
-        `Atomic settlement failed. ${reasons.join(
-          ". "
-        )}. No balances were changed.`
+      setMessage(failureMessage);
+
+      addLog(
+        "error",
+        `Settlement rejected and rolled back. ${reasons.join(". ")}.`
       );
 
       return;
@@ -70,6 +115,11 @@ export default function CrossBorderSimulator() {
     setMessage(
       `Settlement completed atomically: Bank A delivered ${usdAmount} USD and Bank B delivered ${eurAmount} EUR.`
     );
+
+    addLog(
+      "success",
+      `Atomic settlement completed: Bank A delivered ${usdAmount} USD and Bank B delivered ${eurAmount} EUR.`
+    );
   }
 
   function resetSimulation() {
@@ -83,6 +133,13 @@ export default function CrossBorderSimulator() {
 
     setStatus("idle");
     setMessage("Configure the transaction and run the settlement.");
+
+    setLogs([
+      createLogEntry(
+        "info",
+        "Simulation reset to its initial balances and proposal."
+      ),
+    ]);
   }
 
   return (
@@ -185,6 +242,55 @@ export default function CrossBorderSimulator() {
         </p>
 
         <p className="mt-2 leading-7 text-slate-200">{message}</p>
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-cyan-400">
+              Transaction log
+            </p>
+
+            <h3 className="mt-2 text-xl font-semibold">Settlement events</h3>
+          </div>
+
+          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-400">
+            Latest 10
+          </span>
+        </div>
+
+        <div className="mt-6 space-y-3">
+          {logs.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-white/10 px-4 py-6 text-sm text-slate-500">
+              No settlement events yet. Run the simulation to generate a log.
+            </div>
+          ) : (
+            logs.map((entry) => (
+              <div
+                key={entry.id}
+                className="flex gap-4 rounded-xl border border-white/10 bg-slate-950/50 p-4"
+              >
+                <div
+                  className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${
+                    entry.type === "success"
+                      ? "bg-emerald-400"
+                      : entry.type === "error"
+                        ? "bg-red-400"
+                        : "bg-cyan-400"
+                  }`}
+                />
+
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm leading-6 text-slate-200">
+                    {entry.message}
+                  </p>
+
+                  <p className="mt-1 text-xs text-slate-500">{entry.time}</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </section>
   );
