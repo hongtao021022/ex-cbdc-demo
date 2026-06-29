@@ -2,6 +2,8 @@ import CrossBorderSimulator from "@/components/CrossBorderSimulator";
 import ProgrammablePaymentSimulator from "@/components/ProgrammablePaymentSimulator";
 import RegulatoryVisibilitySimulator from "@/components/RegulatoryVisibilitySimulator";
 import FinancialStabilitySimulator from "@/components/FinancialStabilitySimulator";
+import DemoNavigation from "@/components/DemoNavigation";
+import SystemOverview from "@/components/SystemOverview";
 
 const scenarios = [
   {
@@ -44,6 +46,8 @@ const researchDimensions = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100">
+      <DemoNavigation />
+
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-12 sm:px-10 lg:px-12">
         <header className="flex items-center justify-between border-b border-white/10 pb-6">
           <div>
@@ -75,7 +79,7 @@ export default function Home() {
             <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300">
               An interactive research demo for studying CBDCs, tokenized
               deposits, cross-border settlement, programmable payments,
-              privacy, and regulatory oversight.
+              privacy, regulatory oversight, and financial stability.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
@@ -98,9 +102,11 @@ export default function Home() {
           </div>
         </section>
 
+        <SystemOverview />
+
         <section
           id="scenarios"
-          className="scroll-mt-8 border-t border-white/10 py-12"
+          className="scroll-mt-24 border-t border-white/10 py-12"
         >
           <div className="mb-8">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
@@ -120,9 +126,7 @@ export default function Home() {
                 className="block rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/[0.07]"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-xl font-semibold">
-                    {scenario.title}
-                  </h3>
+                  <h3 className="text-xl font-semibold">{scenario.title}</h3>
 
                   <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">
                     {scenario.status}
